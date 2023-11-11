@@ -5,9 +5,11 @@ using TMPro;
 public class LockControl : MonoBehaviour
 {
     public TextMeshPro Password;
-    public string truePass = "80808";
+   [SerializeField] private string truePass;
     public string pass;
     public bool complete = false;
+    public ScenaryController sc;
+    public AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,9 +19,19 @@ public class LockControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (truePass != sc.pass)
+            truePass = sc.pass;
+        if (pass.Length == 5)
+            if (pass == truePass)
+                complete = true;
+            else
+            {
+                pass = "";
+                audioSource.Play();
+            }
         if (complete)
         {
+            sc.LockComplete = true;
             Password.text = "Разрешено";
         }
         else
@@ -29,6 +41,6 @@ public class LockControl : MonoBehaviour
             else
                 Password.text = "Введите код";
         }
-        
+
     }
 }

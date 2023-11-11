@@ -14,7 +14,8 @@ public class ScenaryController : MonoBehaviour
     public bool LockBeginScenaryComlete = false;
     public bool LockScenaryChekComplete = false;
     public bool LockComplete = false;
-    
+    public bool RuchkaComplete = false;
+    public string pass;
 
     public float timer;
     // Start is called before the first frame update
@@ -39,7 +40,7 @@ public class ScenaryController : MonoBehaviour
             string filePath = Path.Combine(desktopPath, "PASSWORD.txt");
 
             // Write some text to the file
-            string pass = "82308";
+            pass = "82308";
             File.WriteAllText(filePath, pass);
             text.text = "’м, похоже нужен код. √л€нь на рабочем столе, он должен быть там.";
             timer = 0;

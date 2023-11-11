@@ -367,6 +367,7 @@
 -analyzer:"B:/Unity/2023.1.9f/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/ControlPlayer.cs"
 "Assets/Scripts/DesktopTrigger.cs"
+"Assets/Scripts/DoorTrigger.cs"
 "Assets/Scripts/LockControl.cs"
 "Assets/Scripts/RadioScript.cs"
 "Assets/Scripts/RaycastInteraction.cs"
