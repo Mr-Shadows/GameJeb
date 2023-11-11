@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class DesktopTrigger : MonoBehaviour
 {
-   public Text text;
-    private float timeInTrigger = 0f;
+    public TMP_Text text;
+    public float timeInTrigger = 0f;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) // ֿנמגונÿול, קעמ מבתוךע, גמרוהרטי ג ענטדדונ, טלווע עוד "Player"

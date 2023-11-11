@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Lock
+  - Props
   layers:
   - Default
   - TransparentFX

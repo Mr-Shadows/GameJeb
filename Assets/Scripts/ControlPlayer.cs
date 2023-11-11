@@ -47,7 +47,12 @@ public class ControlPlayer : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, xRot, 0f);
         CamPlayer.transform.rotation = Quaternion.Euler(-yRot, xRot, 0f);
+        
 
 
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.name);
     }
 }

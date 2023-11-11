@@ -14,6 +14,7 @@ public class ScenaryController : MonoBehaviour
     public bool LockBeginScenaryComlete = false;
     public bool LockScenaryChekComplete = false;
     public bool LockComplete = false;
+    
 
     public float timer;
     // Start is called before the first frame update
@@ -22,7 +23,8 @@ public class ScenaryController : MonoBehaviour
         ScenaryScript = GameObject.Find("Player").GetComponent<RaycastInteraction>();
         string username = Environment.UserName;
         text.text = "Привет,"+ username+ ",добро пожаловать в комнату! Я рассказчик,тут всё просто: прислушивайся ко мне и мы выберемся отсюда в два счёта";
-        StartCoroutine(WritingSingleText(5, "И да, я просто голос в твоей голове. Постарайся не думать об этом."));
+        StartCoroutine(WritingSingleText(5, ""));
+        StartCoroutine(WritingSingleText(10, "И да, я просто голос в твоей голове. Постарайся не думать об этом."));
     }
 
     // Update is called once per frame
@@ -39,7 +41,7 @@ public class ScenaryController : MonoBehaviour
             // Write some text to the file
             string pass = "82308";
             File.WriteAllText(filePath, pass);
-            text.text = "Рассказчик:Хм, похоже нужен код. Глянь на рабочем столе, он должен быть там.";
+            text.text = "Хм, похоже нужен код. Глянь на рабочем столе, он должен быть там.";
             timer = 0;
 
         }
@@ -66,6 +68,10 @@ public class ScenaryController : MonoBehaviour
         text.text = currentText;
         yield return new WaitForSeconds(sleepTime);
         text.text = " ";
+    }
+    public void WriteCompleteLock()
+    {
+
     }
 
 }
