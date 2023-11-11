@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 public class DesktopTrigger : MonoBehaviour
 {
+    public ScenaryController sc;
     public TMP_Text text;
     public float timeInTrigger = 0f;
     private void OnTriggerEnter(Collider other)
@@ -19,6 +20,7 @@ public class DesktopTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player")) // Проверяем, что объект, находящийся в триггере, имеет тег "Player"
         {
+            if(sc.LockBeginScenaryComlete)
             timeInTrigger += Time.deltaTime; // Увеличиваем время нахождения в триггере на время между кадрами
             
         }

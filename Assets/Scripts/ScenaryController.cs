@@ -66,8 +66,11 @@ public class ScenaryController : MonoBehaviour
     {
         yield return new WaitForSeconds(sleepTime);
         text.text = currentText;
-        yield return new WaitForSeconds(sleepTime);
-        text.text = " ";
+        if (currentText != " ")
+        {
+            yield return new WaitForSeconds(sleepTime);
+            text.text = " ";
+        }
     }
     public void WriteCompleteLock()
     {

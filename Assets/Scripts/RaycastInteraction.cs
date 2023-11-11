@@ -96,23 +96,25 @@ public class RaycastInteraction : MonoBehaviour
             {
                 hit.collider.GetComponent<TumbBoxController>().open = !hit.collider.GetComponent<TumbBoxController>().open;
             }
-            
+
+            if (hit.collider.GetComponent<RadioScript>() && Input.GetMouseButtonDown(0))
+            {
+                hit.collider.GetComponent<RadioScript>().NextTrack();
+            }
+
             if (hit.collider.tag == "Props" && Input.GetMouseButtonDown(0))
             {
                 dragItem = hit.collider.gameObject;
                 hit.collider.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 drag = true;
             }
-            
-            
-
         }
 
-        if(hit.collider.GetComponent<LockControl>().pass == hit.collider.GetComponent<LockControl>().truePass)
+        /*if(hit.collider.GetComponent<LockControl>())
         {
             texT.text = "Ну наконец-то, поздравляю, ты начал думмать";
             GameObject.Find("Scenary").GetComponent<ScenaryController>().LockComplete = true;
-        }
+        }*/
         
     }
 
