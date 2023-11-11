@@ -5,11 +5,12 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScenaryController : MonoBehaviour
 {
     private RaycastInteraction ScenaryScript;
-    public Text text;
+    public TMP_Text text;
     public bool LockBeginScenaryComlete = false;
     public bool LockScenaryChekComplete = false;
     public bool LockComplete = false;
@@ -27,7 +28,8 @@ public class ScenaryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+        if(LockBeginScenaryComlete)
+            timer += Time.deltaTime;
         if(ScenaryScript.LockScenary == true && LockBeginScenaryComlete == false)
         {
             LockBeginScenaryComlete = true;
@@ -41,19 +43,20 @@ public class ScenaryController : MonoBehaviour
             timer = 0;
 
         }
-        if(LockComplete = false && timer > 120 && timer < 125)
+        if(!LockComplete && timer > 120 && timer < 125)
         {
             text.text = "Не люблю вешать ярлыки, но на твоём рабочем столе их довольно много.";
         }
-        if (LockComplete = false && timer > 180 && timer < 185)
+        else if (!LockComplete && timer > 180 && timer < 185)
         {
             text.text = "Слушай, ты наверное, утомился. Попробуй свернуть игру, осмотреться. Может, увидишь, что-нибудь новое?";
         }
-        if(LockComplete = false && timer > 300 && timer<305)
+        else if(!LockComplete && timer > 300 && timer<305)
         {
-            text.text = "О, боги, ДА ПОСМОТРИ ТЫ УЖЕ НА СВОЙ РАБОЧИЙ СТОЛ!";
+            text.text = "О, БОГИ, да посмотри ты уже на свой рабочий стол!";
         }
-
+        else if(!LockComplete && timer > 5)
+            text.text = " ";
 
     }
     
@@ -61,6 +64,8 @@ public class ScenaryController : MonoBehaviour
     {
         yield return new WaitForSeconds(sleepTime);
         text.text = currentText;
+        yield return new WaitForSeconds(sleepTime);
+        text.text = " ";
     }
 
 }
