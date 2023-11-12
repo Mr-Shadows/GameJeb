@@ -21,11 +21,7 @@ public class RaycastInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(sc.RuchkaComplete)
-        {
-            drag = false;
-            dragItem = null;
-        }
+        
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward); // Создаем луч, идущий из центра камеры в направлении, куда смотрит камера
         RaycastHit hit; // Информация о попадании луча
         if (drag)
@@ -97,10 +93,9 @@ public class RaycastInteraction : MonoBehaviour
 
                     if (timer > 30 && timer < 35 && hit.collider.GetComponent<LockControl>().pass == "")
                     {
-                        texT.text = "Опять не понимаешь?. Там же написано. ВВЕДИ код";
+                        texT.text = "Не, ты не понял. ВВЕДИ код";
                     }
-                    else
-                        texT.text = " ";
+                    
                 }
             }
             if (hit.collider.GetComponent<TumbBoxController>() && Input.GetMouseButtonDown(0))
@@ -112,22 +107,50 @@ public class RaycastInteraction : MonoBehaviour
             {
                 hit.collider.GetComponent<RadioScript>().NextTrack();
             }
+            if(hit.collider.name == "RoomHeandel" && sc.LockComplete && !sc.RuchkaComplete && Input.GetMouseButtonDown(0))
+            {
+                hit.collider.GetComponent<Rigidbody>().useGravity = true;
+                
+                sc.RuchkaSearchBegin = true;
 
-            if (hit.collider.tag == "Props" && Input.GetMouseButtonDown(0) && sc.LockComplete && !sc.RuchkaComplete)
+            }
+            if (hit.collider.gameObject.name == "Door" && sc.LockComplete && sc.RuchkaComplete && Input.GetMouseButtonDown(0))
+            {
+                hit.collider.GetComponent<DoorTrigger>().open = true;
+            }
+            if (hit.collider.tag == "Props" && Input.GetMouseButtonDown(0) && sc.LockComplete)
             {
                 dragItem = hit.collider.gameObject;
+                dragItem.transform.parent = null;
                 hit.collider.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 drag = true;
             }
 
-
-            /*if(hit.collider.GetComponent<LockControl>())
+            if (hit.collider.tag == "Wall" && Input.GetMouseButtonDown(0) && sc.ImageCreateComplete)
             {
-                texT.text = "Ну наконец-то, поздравляю, ты начал думмать";
-                sc.LockComplete = true;
-            }*/
+                sc.WallDestroyChek = true;
+            }
+            if (hit.collider.tag == "Wall" && Input.GetKeyDown(KeyCode.Delete) && sc.ImageCreateComplete)
+            {
+                hit.collider.gameObject.GetComponent<WallControl>().WebcamRun = true;
+            }
+            //if(hit.collider.GetComponent<LockControl>().)
+            //{
+
+            //    sc.LockComplete = true;
+            //}
 
         }
+    }
+    IEnumerator WritingSingleText(float sleepTime, string currentText)
+    {
+        yield return new WaitForSeconds(sleepTime);
+        texT.text = currentText;
+        //if (currentText != "")
+        //{
+        //    yield return new WaitForSeconds(sleepTime);
+        //    text.text = "";
+        //}
     }
 
 }

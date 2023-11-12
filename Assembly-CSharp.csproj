@@ -62,6 +62,11 @@
     <Compile Include="Assets\Scripts\LockControl.cs" />
     <Compile Include="Assets\Scripts\ControlPlayer.cs" />
     <Compile Include="Assets\Scripts\DesktopTrigger.cs" />
+    <Compile Include="Assets\Scripts\DoorTrigger.cs" />
+    <Compile Include="Assets\Scripts\WallControl.cs" />
+    <Compile Include="Assets\Scripts\ItemCraft.cs" />
+    <Compile Include="Assets\Scripts\RadioScript.cs" />
+    <Compile Include="Assets\Scripts\ItemImageController.cs" />
     <Compile Include="Assets\Scripts\ScenaryController.cs" />
     <Compile Include="Assets\Scripts\RaycastInteraction.cs" />
   </ItemGroup>

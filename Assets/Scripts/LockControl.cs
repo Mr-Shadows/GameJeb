@@ -5,7 +5,8 @@ using TMPro;
 public class LockControl : MonoBehaviour
 {
     public TextMeshPro Password;
-   [SerializeField] private string truePass;
+    public TMP_Text text;
+    [SerializeField] private string truePass;
     public string pass;
     public bool complete = false;
     public ScenaryController sc;
@@ -28,7 +29,15 @@ public class LockControl : MonoBehaviour
             {
                 pass = "";
                 audioSource.Play();
+                
             }
+        if (pass == "0451")
+        {
+            sc.text.text = "“ы уверен, что на том столе действительно работали?";
+            pass = "";
+            audioSource.Play();
+        }
+
         if (complete)
         {
             sc.LockComplete = true;

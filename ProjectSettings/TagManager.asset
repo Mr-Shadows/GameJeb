@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Lock
   - Props
+  - Door
+  - Wall
   layers:
   - Default
   - TransparentFX

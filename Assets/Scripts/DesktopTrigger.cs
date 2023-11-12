@@ -27,11 +27,8 @@ public class DesktopTrigger : MonoBehaviour
     }
     private void Update()
     {
-        if(timeInTrigger > 30f && timeInTrigger<35) 
-        {
-            text.text = "Ты уверен, что на этом столе действительно работали?";
-        }
-        if (timeInTrigger > 60f && timeInTrigger < 65)
+        
+        if (timeInTrigger > 60f && timeInTrigger < 65 && !sc.LockComplete)
         {
             text.text = "Хм, не очень похоже на РАБОЧИЙ стол...";
         }

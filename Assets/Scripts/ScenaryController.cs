@@ -14,9 +14,22 @@ public class ScenaryController : MonoBehaviour
     public bool LockBeginScenaryComlete = false;
     public bool LockScenaryChekComplete = false;
     public bool LockComplete = false;
+    public bool RuchkaSearchBegin = false;
+    public bool RuchkaSearch = false;
     public bool RuchkaComplete = false;
-    public string pass;
+    public bool DoorOpenComplete = false;
+    public bool ImageCreatingBegin = false;
+    public bool SearchUpItemComplete = false;
+    public bool SearchDownItemComplete = false;
+    public bool ImageCreateComplete = false;
+    bool flagSearhItem = false;
+    public bool WallDestroyBegin = false;
+    public bool WallDestroyChek = false;
+    public bool WallDestroyflag = false;
+    public bool WallDestroyComplete = false;
 
+    public string pass;
+    
     public float timer;
     // Start is called before the first frame update
     void Start()
@@ -24,15 +37,16 @@ public class ScenaryController : MonoBehaviour
         ScenaryScript = GameObject.Find("Player").GetComponent<RaycastInteraction>();
         string username = Environment.UserName;
         text.text = "Привет,"+ username+ ",добро пожаловать в комнату! Я рассказчик,тут всё просто: прислушивайся ко мне и мы выберемся отсюда в два счёта";
-        StartCoroutine(WritingSingleText(5, ""));
-        StartCoroutine(WritingSingleText(10, "И да, я просто голос в твоей голове. Постарайся не думать об этом."));
+        StartCoroutine(WritingSingleText(3, ""));
+        StartCoroutine(WritingSingleText(4, "И да, я просто голос в твоей голове. Постарайся не думать об этом."));
+        StartCoroutine(WritingSingleText(7, ""));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(LockBeginScenaryComlete)
-            timer += Time.deltaTime;
+        
+        timer += Time.deltaTime;
         if(ScenaryScript.LockScenary == true && LockBeginScenaryComlete == false)
         {
             LockBeginScenaryComlete = true;
@@ -42,24 +56,137 @@ public class ScenaryController : MonoBehaviour
             // Write some text to the file
             pass = "82308";
             File.WriteAllText(filePath, pass);
-            text.text = "Хм, похоже нужен код. Глянь на рабочем столе, он должен быть там.";
+
+            StartCoroutine(WritingSingleText(0, "Хм, похоже нужен код. Глянь на рабочем столе, он должен быть там."));
+            StartCoroutine(WritingSingleText(4, ""));
             timer = 0;
+            
 
         }
         if(!LockComplete && timer > 120 && timer < 125)
         {
             text.text = "Не люблю вешать ярлыки, но на твоём рабочем столе их довольно много.";
         }
-        else if (!LockComplete && timer > 180 && timer < 185)
+        if (!LockComplete && timer > 180 && timer < 185)
         {
             text.text = "Слушай, ты наверное, утомился. Попробуй свернуть игру, осмотреться. Может, увидишь, что-нибудь новое?";
         }
-        else if(!LockComplete && timer > 300 && timer<305)
+        if(!LockComplete && timer > 300 && timer<305)
         {
-            text.text = "О, БОГИ, да посмотри ты уже на свой рабочий стол!";
+            text.text = "О, боги, ДА ПОСМОТРИ ТЫ УЖЕ НА СВОЙ РАБОЧИЙ СТОЛ!";
         }
-        else if(!LockComplete && timer > 5)
-            text.text = " ";
+        if (RuchkaSearchBegin && RuchkaSearch == false && !RuchkaComplete)
+        {
+            RuchkaSearch = true;
+            timer = 0;
+            StartCoroutine(WritingSingleText(0, "Класс, похоже кто-то забыл прикрепить ручку к текстуре двери. И как нам теперь её открыть?"));
+            StartCoroutine(WritingSingleText(6, ""));
+            StartCoroutine(WritingSingleText(7, "О, знаю! Найди что-нибудь похожее на ручку и приделай к двери. Авось прокатит."));
+            StartCoroutine(WritingSingleText(12, ""));
+        }
+        if (!RuchkaComplete && timer > 45 && timer < 50)
+        {
+            text.text = "Ну неужели в этой комнате совсем нет ручек? Должны быть!";
+            
+
+        }
+        else if (text.text == "Ну неужели в этой комнате совсем нет ручек? Должны быть!")
+        {
+            text.text = "";
+        }
+
+        if (!RuchkaComplete && timer > 100 && timer < 105)
+        {
+            text.text = "Может где-то есть ненужные ручки? Ну, такие, которыми никто не пользуется...";
+            
+
+        }
+        else if (text.text == "Может где-то есть ненужные ручки? Ну, такие, которыми никто не пользуется...")
+        {
+            text.text = "";
+        }
+        if (RuchkaSearch && RuchkaComplete)
+        {
+            RuchkaSearch = false;
+            RuchkaSearchBegin = false;
+            StartCoroutine(WritingSingleText(0, "Ха, надо же... Сработало! То есть, всё как я и рассчитывал. Открывай скорее!"));
+            StartCoroutine(WritingSingleText(5, ""));
+        }
+        if (DoorOpenComplete && ImageCreatingBegin == false)
+        {
+            ImageCreatingBegin = true;
+            StartCoroutine(WritingSingleText(0, "Оу, неожиданно... Ну да ладно. Найди что-нибудь, чтобы сломать эту стену."));
+            StartCoroutine(WritingSingleText(4, ""));
+            StartCoroutine(WritingSingleText(5, "Займись, так сказать, ШАХТЁРСКИМ РЕМЕСЛОМ."));
+            StartCoroutine(WritingSingleText(9, ""));
+            timer = 0;
+        }
+        if(ImageCreatingBegin && timer > 60 && timer < 65 && !ImageCreateComplete)
+        {
+            text.text = "Насколько я помню, нужно всего две палки и три железных слитка. Ну или рукоять и клюв...";
+            
+        }
+        else if(text.text == "Насколько я помню, нужно всего две палки и три железных слитка. Ну или рукоять и клюв...")
+        {
+            text.text = "";
+        }
+        if(!flagSearhItem && SearchDownItemComplete && SearchUpItemComplete && !ImageCreateComplete)
+        {
+            timer = 0;
+        }
+        if(flagSearhItem && timer > 60 && timer < 65 && !ImageCreateComplete)
+        {
+            text.text = "Попробуй положить запчасти на нерабочий стол \nВот теперь это - РАБОЧИЙ стол!";
+        }
+        else if(text.text == "Попробуй положить запчасти на нерабочий стол \nВот теперь это - РАБОЧИЙ стол!")
+        {
+            text.text = "";
+        }
+        if (ImageCreateComplete && !WallDestroyBegin)
+        {
+            timer = 0;
+            StartCoroutine(WritingSingleText(0, "Мда, на троечку если честно... Ну да ладно.Теперь попробуй сломать стену!"));
+            StartCoroutine(WritingSingleText(5, ""));
+            
+            WallDestroyBegin = true;
+        }
+        if(WallDestroyChek && !WallDestroyflag)
+        {
+            StartCoroutine(WritingSingleText(0, "Ага, то есть и механики ломания нет... Какой дурак эту игру делал?"));
+            StartCoroutine(WritingSingleText(4, ""));
+            StartCoroutine(WritingSingleText(5, "Знаешь что? Просто убери её!"));
+            StartCoroutine(WritingSingleText(9, ""));
+            timer = 0;
+            WallDestroyflag = true;
+        }
+        if (WallDestroyChek && !WallDestroyComplete && timer > 30 && timer < 35)
+        {
+            text.text = "Ну же, не тупи. Удали стену!";
+        }
+        else if (text.text == "Ну же, не тупи. Удали стену!")
+            text.text = "";
+        if(WallDestroyComplete && !WallDestroyflag && timer > 60 && timer < 65)
+        {
+            text.text = "Это же ненужная стена, сотри ее как и всю бесполезную информацию";
+        }
+        else if(text.text == "Это же ненужная стена, сотри ее как и всю бесполезную информацию")
+        {
+            text.text = "";
+        }
+        if (WallDestroyComplete && !WallDestroyflag && timer > 90 && timer < 95)
+        {
+            text.text = "Тебе действительно так сложно нажать клавишу?";
+        } else if (text.text == "Тебе действительно так сложно нажать клавишу?")
+        {
+            text.text = "";
+        }
+
+
+
+
+
+
+
 
     }
     
@@ -67,15 +194,12 @@ public class ScenaryController : MonoBehaviour
     {
         yield return new WaitForSeconds(sleepTime);
         text.text = currentText;
-        if (currentText != " ")
-        {
-            yield return new WaitForSeconds(sleepTime);
-            text.text = " ";
-        }
+        //if (currentText != "")
+        //{
+        //    yield return new WaitForSeconds(sleepTime);
+        //    text.text = "";
+        //}
     }
-    public void WriteCompleteLock()
-    {
-
-    }
+    
 
 }
