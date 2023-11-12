@@ -2946,6 +2946,7 @@ MonoBehaviour:
   SearchUpItemComplete: 0
   SearchDownItemComplete: 0
   ImageCreateComplete: 0
+  ImageCreating: 0
   WallDestroyBegin: 0
   WallDestroyChek: 0
   WallDestroyflag: 0
@@ -2979,12 +2980,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc3db8b310628941aecd206647b513e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imageName: ItemImage.png
   filePath: Image\ItemImage.png
   createImage: 0
   projectPath1: 
+  fullPath: 
+  fullPathMain: 
+  relativeImagePath: Image\ItemImage.png
   imagePathTrue: 
   fileClearPatch: Image/ItemImage.png
+  CreateImageFlag: 0
   flagClear: 0
+  imagePath: D:/GitHub/GameJeb/Assets/Image/ItemImage.png
   imageComplete: 0
 --- !u!1 &1370109479 stripped
 GameObject:

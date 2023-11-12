@@ -7,72 +7,57 @@ using UnityEngine;
 
 public class ItemImageController : MonoBehaviour
 {
+    public string imageName;
     public string filePath; // Путь к файлу .png внутри папки проекта
     public bool createImage = false;
     public DateTime lastWriteTime;
+    public DateTime postWriteTime;
     string projectPath;
     public string projectPath1;
-    string fullPath;
+    public string fullPath;
+    public string fullPathMain;
+    public string relativeImagePath;
     public string imagePathTrue;
     public string fileClearPatch;
+    public bool CreateImageFlag = false;
     public bool flagClear = false;
+    public string imagePath = Application.dataPath + "/Image/ItemImage.png";
     public bool imageComplete = false;
     void Start()
     {
         
+        fullPath = imagePath;
+        lastWriteTime = File.GetLastWriteTime(fullPath);
+       
     }
     void Update()
     {
-        if(lastWriteTime!= File.GetLastWriteTime(fullPath)) 
+        postWriteTime = File.GetLastWriteTime(fullPath);
+        UnityEngine.Debug.Log(lastWriteTime != File.GetLastWriteTime(fullPath));
+        if (lastWriteTime != postWriteTime && flagClear == false) 
         {
-            if(flagClear == false)
-            {
+            
                 
 
-                ClearImageFon(Path.Combine(projectPath, fileClearPatch));
+                ClearImageFon(fullPath);
                 flagClear = true;
                 GameObject.Find("Scenary").GetComponent<ScenaryController>().ImageCreateComplete = true;
-            }
+            
+        }
+        if(CreateImageFlag == true)
+        {
+            CreateImage();
+            CreateImageFlag = false;
         }
     }
     public void CreateImage()
     {
-        
-        projectPath = Application.dataPath; // Получаем путь к папке Assets внутри проекта
-        
-        
-        fullPath = Path.Combine(projectPath, filePath); // Получаем полный путь к файлу
 
-        // Открываем файл в Paint
-        ProcessStartInfo startInfo = new ProcessStartInfo
-        {
-            FileName = "mspaint.exe",
-            Arguments = fullPath
-        };
-        Process.Start(startInfo);
-
-        // Получаем время последнего изменения файла
-        lastWriteTime = File.GetLastWriteTime(fullPath);
-
-        // Дальнейшая логика для проверки изменения файла
-        // Можно сравнить lastWriteTime с новым временем последнего изменения файла в Update() или другом подходящем методе
+        OpenImageInPaint(relativeImagePath);
     }
-    void ClearImageFon(string imagePathCur)
+    void ClearImageFon(string imagePath)
     {
-        string imagePath = "";
-        for (int i = 0; i < imagePathCur.Length; i++)
-        {
-           
-            if (imagePathCur[i] == '\\')
-                imagePath+= '/';
-
-            else
-            {
-                imagePath += imagePathCur[i];
-            }
-
-
-        }
+        
         if (System.IO.File.Exists(imagePath))
         {
             byte[] fileData = System.IO.File.ReadAllBytes(imagePath);
@@ -108,7 +93,32 @@ public class ItemImageController : MonoBehaviour
     {
         return (color.r > 0.9f && color.g > 0.9f && color.b > 0.9f);
     }
+    string FindImageInProject(string imageName)
+    {
+        string[] imageFiles = Directory.GetFiles(Application.dataPath, imageName, SearchOption.AllDirectories);
+        if (imageFiles.Length > 0)
+        {
+            return imageFiles[0];
+        }
+        return null;
+    }
+    void OpenImageInPaint(string relativeImagePath)
+    {
+        string absoluteImagePath = Path.Combine(Application.dataPath, relativeImagePath); // Склеиваем путь к проекту и относительный путь к изображению
+        if (File.Exists(absoluteImagePath))
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "mspaint"; // Просто указываем название исполняемого файла программы, так как Paint обычно находится в системном пути
+            startInfo.Arguments = "\"" + absoluteImagePath + "\"";
+            Process.Start(startInfo);
+            UnityEngine.Debug.Log("PAINT");
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Файл изображения не найден.");
+        }
+    }
 
-    
-    
+
+
 }

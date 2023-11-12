@@ -23,6 +23,7 @@ public class ScenaryController : MonoBehaviour
     public bool SearchDownItemComplete = false;
     public bool ImageCreateComplete = false;
     bool flagSearhItem = false;
+    public bool ImageCreating = false;
     public bool WallDestroyBegin = false;
     public bool WallDestroyChek = false;
     public bool WallDestroyflag = false;
@@ -141,6 +142,18 @@ public class ScenaryController : MonoBehaviour
         else if(text.text == "Попробуй положить запчасти на нерабочий стол \nВот теперь это - РАБОЧИЙ стол!")
         {
             text.text = "";
+        }
+        if (ImageCreating && !ImageCreateComplete)
+        {
+            text.text = "Ах, да, я забыл её нарисовать... А давай ты сам её нарисуешь? ";
+            
+        }
+        else
+        {
+            if(text.text == "Ах, да, я забыл её нарисовать... А давай ты сам её нарисуешь? ")
+            {
+                text.text = "";
+            }
         }
         if (ImageCreateComplete && !WallDestroyBegin)
         {
