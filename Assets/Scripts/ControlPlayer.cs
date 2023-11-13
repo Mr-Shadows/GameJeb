@@ -27,7 +27,14 @@ public class ControlPlayer : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (LockPlayer)
+        {
+            // Определяем желаемый поворот в виде Quaternion с углами (0, 0, 0)
+            Quaternion targetRotation = Quaternion.Euler(Vector3.zero);
 
+            // Используем Lerp для плавного поворота
+            CamPlayer.transform.rotation = Quaternion.Lerp(CamPlayer.transform.rotation, targetRotation, 0.8f * Time.deltaTime);
+        }
 
 
         if (!LockPlayer)

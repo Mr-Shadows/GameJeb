@@ -24,12 +24,12 @@ public class RaycastInteraction : MonoBehaviour
         
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward); // Создаем луч, идущий из центра камеры в направлении, куда смотрит камера
         RaycastHit hit; // Информация о попадании луча
-        if (drag)
+        if (drag && (!sc.RuchkaComplete || sc.DoorOpenComplete))
         {
             DragPos = Camera.main.transform.position + Camera.main.transform.forward * 2f;
             dragItem.transform.position = Vector3.Lerp(dragItem.transform.position, DragPos, Time.deltaTime * 10);
         }
-        if (drag == true && Input.GetMouseButtonUp(0))
+        if (drag && Input.GetMouseButtonUp(0) && (!sc.RuchkaComplete || sc.DoorOpenComplete))
         {
             drag = false;
             dragItem.GetComponent<Rigidbody>().useGravity = true;
@@ -95,7 +95,7 @@ public class RaycastInteraction : MonoBehaviour
                     {
                         texT.text = "Не, ты не понял. ВВЕДИ код";
                     }
-                    
+
                 }
             }
             if (hit.collider.GetComponent<TumbBoxController>() && Input.GetMouseButtonDown(0))
@@ -107,10 +107,16 @@ public class RaycastInteraction : MonoBehaviour
             {
                 hit.collider.GetComponent<RadioScript>().NextTrack();
             }
-            if(hit.collider.name == "RoomHeandel" && sc.LockComplete && !sc.RuchkaComplete && Input.GetMouseButtonDown(0))
+
+            if (hit.collider.GetComponent<GuitarScript>() && Input.GetMouseButtonDown(0))
+            {
+                hit.collider.GetComponent<GuitarScript>().PlayTrack();
+            }
+
+            if (hit.collider.name == "RoomHeandel" && sc.LockComplete && !sc.RuchkaComplete && Input.GetMouseButtonDown(0))
             {
                 hit.collider.GetComponent<Rigidbody>().useGravity = true;
-                
+
                 sc.RuchkaSearchBegin = true;
 
             }
@@ -118,7 +124,7 @@ public class RaycastInteraction : MonoBehaviour
             {
                 hit.collider.GetComponent<DoorTrigger>().open = true;
             }
-            if (hit.collider.tag == "Props" && Input.GetMouseButtonDown(0) && sc.LockComplete)
+            if (hit.collider.tag == "Props" && Input.GetMouseButtonDown(0) && (!sc.RuchkaComplete || sc.DoorOpenComplete))
             {
                 dragItem = hit.collider.gameObject;
                 dragItem.transform.parent = null;

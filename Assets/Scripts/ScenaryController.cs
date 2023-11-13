@@ -9,6 +9,8 @@ using TMPro;
 
 public class ScenaryController : MonoBehaviour
 {
+    public RadioScript1 ozv;
+    public Collider DverRuchka;
     private RaycastInteraction ScenaryScript;
     public TMP_Text text;
     public bool LockBeginScenaryComlete = false;
@@ -30,25 +32,25 @@ public class ScenaryController : MonoBehaviour
     public bool WallDestroyComplete = false;
 
     public string pass;
-    
+
     public float timer;
     // Start is called before the first frame update
     void Start()
     {
         ScenaryScript = GameObject.Find("Player").GetComponent<RaycastInteraction>();
         string username = Environment.UserName;
-        text.text = "Ïðèâåò,"+ username+ ",äîáðî ïîæàëîâàòü â êîìíàòó! ß ðàññêàç÷èê,òóò âñ¸ ïðîñòî: ïðèñëóøèâàéñÿ êî ìíå è ìû âûáåðåìñÿ îòñþäà â äâà ñ÷¸òà";
+        text.text = "ÐŸÑ€Ð¸Ð²ÐµÑ‚,"+ username+ " ,Ð´Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ Ð² ÐºÐ¾Ð¼Ð½Ð°Ñ‚Ñƒ! Ð¯ Ñ€Ð°ÑÑÐºÐ°Ð·Ñ‡Ð¸Ðº,Ñ‚ÑƒÑ‚ Ð²ÑÑ‘ Ð¿Ñ€Ð¾ÑÑ‚Ð¾: Ð¿Ñ€Ð¸ÑÐ»ÑƒÑˆÐ¸Ð²Ð°Ð¹ÑÑ ÐºÐ¾ Ð¼Ð½Ðµ Ð¸ Ð¼Ñ‹ Ð²Ñ‹Ð±ÐµÑ€ÐµÐ¼ÑÑ Ð¾Ñ‚ÑÑŽÐ´Ð° Ð² Ð´Ð²Ð° ÑÑ‡Ñ‘Ñ‚Ð°";
         StartCoroutine(WritingSingleText(3, ""));
-        StartCoroutine(WritingSingleText(4, "È äà, ÿ ïðîñòî ãîëîñ â òâîåé ãîëîâå. Ïîñòàðàéñÿ íå äóìàòü îá ýòîì."));
+        StartCoroutine(WritingSingleText(4, "Ð˜ Ð´Ð°, Ñ Ð¿Ñ€Ð¾ÑÑ‚Ð¾ Ð³Ð¾Ð»Ð¾Ñ Ð² Ñ‚Ð²Ð¾ÐµÐ¹ Ð³Ð¾Ð»Ð¾Ð²Ðµ. ÐŸÐ¾ÑÑ‚Ð°Ñ€Ð°Ð¹ÑÑ Ð½Ðµ Ð´ÑƒÐ¼Ð°Ñ‚ÑŒ Ð¾Ð± ÑÑ‚Ð¾Ð¼."));
         StartCoroutine(WritingSingleText(7, ""));
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        timer += Time.deltaTime;
-        if(ScenaryScript.LockScenary == true && LockBeginScenaryComlete == false)
+        if (LockBeginScenaryComlete)
+            timer += Time.deltaTime;
+        if (ScenaryScript.LockScenary == true && LockBeginScenaryComlete == false)
         {
             LockBeginScenaryComlete = true;
             string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
@@ -58,51 +60,62 @@ public class ScenaryController : MonoBehaviour
             pass = "82308";
             File.WriteAllText(filePath, pass);
 
-            StartCoroutine(WritingSingleText(0, "Õì, ïîõîæå íóæåí êîä. Ãëÿíü íà ðàáî÷åì ñòîëå, îí äîëæåí áûòü òàì."));
+            StartCoroutine(WritingSingleText(0, "Ð¥Ð¼, Ð¿Ð¾Ñ…Ð¾Ð¶Ðµ Ð½ÑƒÐ¶ÐµÐ½ ÐºÐ¾Ð´. Ð“Ð»ÑÐ½ÑŒ Ð½Ð° Ñ€Ð°Ð±Ð¾Ñ‡ÐµÐ¼ ÑÑ‚Ð¾Ð»Ðµ, Ð¾Ð½ Ð´Ð¾Ð»Ð¶ÐµÐ½ Ð±Ñ‹Ñ‚ÑŒ Ñ‚Ð°Ð¼."));
+            ozv.NextTrack();
             StartCoroutine(WritingSingleText(4, ""));
             timer = 0;
-            
+
 
         }
-        if(!LockComplete && timer > 120 && timer < 125)
+        if (!LockComplete && timer > 20 && timer < 25)
         {
-            text.text = "Íå ëþáëþ âåøàòü ÿðëûêè, íî íà òâî¸ì ðàáî÷åì ñòîëå èõ äîâîëüíî ìíîãî.";
+            text.text = "ÐÐµ Ð»ÑŽÐ±Ð»ÑŽ Ð²ÐµÑˆÐ°Ñ‚ÑŒ ÑÑ€Ð»Ñ‹ÐºÐ¸, Ð½Ð¾ Ð½Ð° Ñ‚Ð²Ð¾Ñ‘Ð¼ Ñ€Ð°Ð±Ð¾Ñ‡ÐµÐ¼ ÑÑ‚Ð¾Ð»Ðµ Ð¸Ñ… Ð´Ð¾Ð²Ð¾Ð»ÑŒÐ½Ð¾ Ð¼Ð½Ð¾Ð³Ð¾.";
+            ozv.NextTrack();
         }
-        if (!LockComplete && timer > 180 && timer < 185)
+        if (!LockComplete && timer > 50 && timer < 55)
         {
-            text.text = "Ñëóøàé, òû íàâåðíîå, óòîìèëñÿ. Ïîïðîáóé ñâåðíóòü èãðó, îñìîòðåòüñÿ. Ìîæåò, óâèäèøü, ÷òî-íèáóäü íîâîå?";
+            text.text = "Ð¡Ð»ÑƒÑˆÐ°Ð¹, Ñ‚Ñ‹ Ð½Ð°Ð²ÐµÑ€Ð½Ð¾Ðµ, ÑƒÑ‚Ð¾Ð¼Ð¸Ð»ÑÑ. ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹ ÑÐ²ÐµÑ€Ð½ÑƒÑ‚ÑŒ Ð¸Ð³Ñ€Ñƒ, Ð¾ÑÐ¼Ð¾Ñ‚Ñ€ÐµÑ‚ÑŒÑÑ. ÐœÐ¾Ð¶ÐµÑ‚, ÑƒÐ²Ð¸Ð´Ð¸ÑˆÑŒ, Ñ‡Ñ‚Ð¾-Ð½Ð¸Ð±ÑƒÐ´ÑŒ Ð½Ð¾Ð²Ð¾Ðµ?";
+            ozv.NextTrack();
         }
-        if(!LockComplete && timer > 300 && timer<305)
+        if (!LockComplete && timer > 70 && timer < 75)
         {
-            text.text = "Î, áîãè, ÄÀ ÏÎÑÌÎÒÐÈ ÒÛ ÓÆÅ ÍÀ ÑÂÎÉ ÐÀÁÎ×ÈÉ ÑÒÎË!";
+            text.text = "Ðž, Ð±Ð¾Ð³Ð¸, Ð”Ð ÐŸÐžÐ¡ÐœÐžÐ¢Ð Ð˜ Ð¢Ð« Ð£Ð–Ð• ÐÐ Ð¡Ð’ÐžÐ™ Ð ÐÐ‘ÐžÐ§Ð˜Ð™ Ð¡Ð¢ÐžÐ›!";
+            ozv.NextTrack();
         }
         if (RuchkaSearchBegin && RuchkaSearch == false && !RuchkaComplete)
         {
             RuchkaSearch = true;
             timer = 0;
-            StartCoroutine(WritingSingleText(0, "Êëàññ, ïîõîæå êòî-òî çàáûë ïðèêðåïèòü ðó÷êó ê òåêñòóðå äâåðè. È êàê íàì òåïåðü å¸ îòêðûòü?"));
+            StartCoroutine(WritingSingleText(0, "ÐšÐ»Ð°ÑÑ, Ð¿Ð¾Ñ…Ð¾Ð¶Ðµ ÐºÑ‚Ð¾-Ñ‚Ð¾ Ð·Ð°Ð±Ñ‹Ð» Ð¿Ñ€Ð¸ÐºÑ€ÐµÐ¿Ð¸Ñ‚ÑŒ Ñ€ÑƒÑ‡ÐºÑƒ Ðº Ñ‚ÐµÐºÑÑ‚ÑƒÑ€Ðµ Ð´Ð²ÐµÑ€Ð¸. Ð˜ ÐºÐ°Ðº Ð½Ð°Ð¼ Ñ‚ÐµÐ¿ÐµÑ€ÑŒ ÐµÑ‘ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚ÑŒ?"));
+            ozv.NextTrack();
             StartCoroutine(WritingSingleText(6, ""));
-            StartCoroutine(WritingSingleText(7, "Î, çíàþ! Íàéäè ÷òî-íèáóäü ïîõîæåå íà ðó÷êó è ïðèäåëàé ê äâåðè. Àâîñü ïðîêàòèò."));
+            StartCoroutine(WritingSingleText(7, "Ðž, Ð·Ð½Ð°ÑŽ! ÐÐ°Ð¹Ð´Ð¸ Ñ‡Ñ‚Ð¾-Ð½Ð¸Ð±ÑƒÐ´ÑŒ Ð¿Ð¾Ñ…Ð¾Ð¶ÐµÐµ Ð½Ð° Ñ€ÑƒÑ‡ÐºÑƒ Ð¸ Ð¿Ñ€Ð¸Ð´ÐµÐ»Ð°Ð¹ Ðº Ð´Ð²ÐµÑ€Ð¸. ÐÐ²Ð¾ÑÑŒ Ð¿Ñ€Ð¾ÐºÐ°Ñ‚Ð¸Ñ‚."));
+            ozv.NextTrack();
             StartCoroutine(WritingSingleText(12, ""));
         }
-        if (!RuchkaComplete && timer > 45 && timer < 50)
+        if (!RuchkaComplete && timer > 45 && timer < 50 && LockComplete)
         {
-            text.text = "Íó íåóæåëè â ýòîé êîìíàòå ñîâñåì íåò ðó÷åê? Äîëæíû áûòü!";
-            
+            text.text = "ÐÑƒ Ð½ÐµÑƒÐ¶ÐµÐ»Ð¸ Ð² ÑÑ‚Ð¾Ð¹ ÐºÐ¾Ð¼Ð½Ð°Ñ‚Ðµ ÑÐ¾Ð²ÑÐµÐ¼ Ð½ÐµÑ‚ Ñ€ÑƒÑ‡ÐµÐº? Ð”Ð¾Ð»Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ!";
+            ozv.NextTrack();
+
 
         }
-        else if (text.text == "Íó íåóæåëè â ýòîé êîìíàòå ñîâñåì íåò ðó÷åê? Äîëæíû áûòü!")
+        else if (text.text == "ÐÑƒ Ð½ÐµÑƒÐ¶ÐµÐ»Ð¸ Ð² ÑÑ‚Ð¾Ð¹ ÐºÐ¾Ð¼Ð½Ð°Ñ‚Ðµ ÑÐ¾Ð²ÑÐµÐ¼ Ð½ÐµÑ‚ Ñ€ÑƒÑ‡ÐµÐº? Ð”Ð¾Ð»Ð¶Ð½Ñ‹ Ð±Ñ‹Ñ‚ÑŒ!")
+            
         {
+
             text.text = "";
         }
 
-        if (!RuchkaComplete && timer > 100 && timer < 105)
+        if (!RuchkaComplete && timer > 100 && timer < 105 && LockComplete)
         {
-            text.text = "Ìîæåò ãäå-òî åñòü íåíóæíûå ðó÷êè? Íó, òàêèå, êîòîðûìè íèêòî íå ïîëüçóåòñÿ...";
-            
+            text.text = "ÐœÐ¾Ð¶ÐµÑ‚ Ð³Ð´Ðµ-Ñ‚Ð¾ ÐµÑÑ‚ÑŒ Ð½ÐµÐ½ÑƒÐ¶Ð½Ñ‹Ðµ Ñ€ÑƒÑ‡ÐºÐ¸? ÐÑƒ, Ñ‚Ð°ÐºÐ¸Ðµ, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¼Ð¸ Ð½Ð¸ÐºÑ‚Ð¾ Ð½Ðµ Ð¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ...";
+            ozv.NextTrack();
+
 
         }
-        else if (text.text == "Ìîæåò ãäå-òî åñòü íåíóæíûå ðó÷êè? Íó, òàêèå, êîòîðûìè íèêòî íå ïîëüçóåòñÿ...")
+        else if (text.text == "ÐœÐ¾Ð¶ÐµÑ‚ Ð³Ð´Ðµ-Ñ‚Ð¾ ÐµÑÑ‚ÑŒ Ð½ÐµÐ½ÑƒÐ¶Ð½Ñ‹Ðµ Ñ€ÑƒÑ‡ÐºÐ¸? ÐÑƒ, Ñ‚Ð°ÐºÐ¸Ðµ, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¼Ð¸ Ð½Ð¸ÐºÑ‚Ð¾ Ð½Ðµ Ð¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ...")
+            
         {
             text.text = "";
         }
@@ -110,89 +123,88 @@ public class ScenaryController : MonoBehaviour
         {
             RuchkaSearch = false;
             RuchkaSearchBegin = false;
-            StartCoroutine(WritingSingleText(0, "Õà, íàäî æå... Ñðàáîòàëî! Òî åñòü, âñ¸ êàê ÿ è ðàññ÷èòûâàë. Îòêðûâàé ñêîðåå!"));
+            StartCoroutine(WritingSingleText(0, "Ð¥Ð°, Ð½Ð°Ð´Ð¾ Ð¶Ðµ... Ð¡Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ð»Ð¾! Ð¢Ð¾ ÐµÑÑ‚ÑŒ, Ð²ÑÑ‘ ÐºÐ°Ðº Ñ Ð¸ Ñ€Ð°ÑÑÑ‡Ð¸Ñ‚Ñ‹Ð²Ð°Ð». ÐžÑ‚ÐºÑ€Ñ‹Ð²Ð°Ð¹ ÑÐºÐ¾Ñ€ÐµÐµ!"));
+            ozv.NextTrack();
             StartCoroutine(WritingSingleText(5, ""));
         }
-        if (DoorOpenComplete && ImageCreatingBegin == false)
+        if (DoorOpenComplete && !ImageCreatingBegin)
         {
             ImageCreatingBegin = true;
-            StartCoroutine(WritingSingleText(0, "Îó, íåîæèäàííî... Íó äà ëàäíî. Íàéäè ÷òî-íèáóäü, ÷òîáû ñëîìàòü ýòó ñòåíó."));
+            StartCoroutine(WritingSingleText(0, "ÐžÑƒ, Ð½ÐµÐ¾Ð¶Ð¸Ð´Ð°Ð½Ð½Ð¾... ÐÑƒ Ð´Ð° Ð»Ð°Ð´Ð½Ð¾. ÐÐ°Ð¹Ð´Ð¸ Ñ‡Ñ‚Ð¾-Ð½Ð¸Ð±ÑƒÐ´ÑŒ, Ñ‡Ñ‚Ð¾Ð±Ñ‹ ÑÐ»Ð¾Ð¼Ð°Ñ‚ÑŒ ÑÑ‚Ñƒ ÑÑ‚ÐµÐ½Ñƒ."));
+            ozv.NextTrack();
             StartCoroutine(WritingSingleText(4, ""));
-            StartCoroutine(WritingSingleText(5, "Çàéìèñü, òàê ñêàçàòü, ØÀÕÒ¨ÐÑÊÈÌ ÐÅÌÅÑËÎÌ."));
+            StartCoroutine(WritingSingleText(5, "Ð—Ð°Ð¹Ð¼Ð¸ÑÑŒ, Ñ‚Ð°Ðº ÑÐºÐ°Ð·Ð°Ñ‚ÑŒ, Ð¨ÐÐ¥Ð¢ÐÐ Ð¡ÐšÐ˜Ðœ Ð Ð•ÐœÐ•Ð¡Ð›ÐžÐœ."));
+            ozv.NextTrack();
             StartCoroutine(WritingSingleText(9, ""));
             timer = 0;
         }
-        if(ImageCreatingBegin && timer > 60 && timer < 65 && !ImageCreateComplete)
+        if (ImageCreatingBegin && timer > 60 && timer < 65 && !ImageCreateComplete && RuchkaComplete)
         {
-            text.text = "Íàñêîëüêî ÿ ïîìíþ, íóæíî âñåãî äâå ïàëêè è òðè æåëåçíûõ ñëèòêà. Íó èëè ðóêîÿòü è êëþâ...";
-            
+            text.text = "ÐÐ°ÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ñ Ð¿Ð¾Ð¼Ð½ÑŽ, Ð½ÑƒÐ¶Ð½Ð¾ Ð²ÑÐµÐ³Ð¾ Ð´Ð²Ðµ Ð¿Ð°Ð»ÐºÐ¸ Ð¸ Ñ‚Ñ€Ð¸ Ð¶ÐµÐ»ÐµÐ·Ð½Ñ‹Ñ… ÑÐ»Ð¸Ñ‚ÐºÐ°. ÐÑƒ Ð¸Ð»Ð¸ Ñ€ÑƒÐºÐ¾ÑÑ‚ÑŒ Ð¸ ÐºÐ»ÑŽÐ²...";
+            ozv.NextTrack();
+
         }
-        else if(text.text == "Íàñêîëüêî ÿ ïîìíþ, íóæíî âñåãî äâå ïàëêè è òðè æåëåçíûõ ñëèòêà. Íó èëè ðóêîÿòü è êëþâ...")
+        else if (text.text == "ÐÐ°ÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ñ Ð¿Ð¾Ð¼Ð½ÑŽ, Ð½ÑƒÐ¶Ð½Ð¾ Ð²ÑÐµÐ³Ð¾ Ð´Ð²Ðµ Ð¿Ð°Ð»ÐºÐ¸ Ð¸ Ñ‚Ñ€Ð¸ Ð¶ÐµÐ»ÐµÐ·Ð½Ñ‹Ñ… ÑÐ»Ð¸Ñ‚ÐºÐ°. ÐÑƒ Ð¸Ð»Ð¸ Ñ€ÑƒÐºÐ¾ÑÑ‚ÑŒ Ð¸ ÐºÐ»ÑŽÐ²...")
         {
             text.text = "";
         }
-        if(!flagSearhItem && SearchDownItemComplete && SearchUpItemComplete && !ImageCreateComplete)
+        if (!flagSearhItem && SearchDownItemComplete && SearchUpItemComplete && !ImageCreateComplete && RuchkaComplete)
         {
             timer = 0;
         }
-        if(flagSearhItem && timer > 60 && timer < 65 && !ImageCreateComplete)
+        if (flagSearhItem && timer > 60 && timer < 65 && !ImageCreateComplete && RuchkaComplete)
         {
-            text.text = "Ïîïðîáóé ïîëîæèòü çàï÷àñòè íà íåðàáî÷èé ñòîë \nÂîò òåïåðü ýòî - ÐÀÁÎ×ÈÉ ñòîë!";
+            text.text = "ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹ Ð¿Ð¾Ð»Ð¾Ð¶Ð¸Ñ‚ÑŒ Ð·Ð°Ð¿Ñ‡Ð°ÑÑ‚Ð¸ Ð½Ð° Ð½ÐµÑ€Ð°Ð±Ð¾Ñ‡Ð¸Ð¹ ÑÑ‚Ð¾Ð» \\nÐ’Ð¾Ñ‚ Ñ‚ÐµÐ¿ÐµÑ€ÑŒ ÑÑ‚Ð¾ - Ð ÐÐ‘ÐžÐ§Ð˜Ð™ ÑÑ‚Ð¾Ð»!";
+            ozv.NextTrack();
         }
-        else if(text.text == "Ïîïðîáóé ïîëîæèòü çàï÷àñòè íà íåðàáî÷èé ñòîë \nÂîò òåïåðü ýòî - ÐÀÁÎ×ÈÉ ñòîë!")
+        else if (text.text == "ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹ Ð¿Ð¾Ð»Ð¾Ð¶Ð¸Ñ‚ÑŒ Ð·Ð°Ð¿Ñ‡Ð°ÑÑ‚Ð¸ Ð½Ð° Ð½ÐµÑ€Ð°Ð±Ð¾Ñ‡Ð¸Ð¹ ÑÑ‚Ð¾Ð» \\nÐ’Ð¾Ñ‚ Ñ‚ÐµÐ¿ÐµÑ€ÑŒ ÑÑ‚Ð¾ - Ð ÐÐ‘ÐžÐ§Ð˜Ð™ ÑÑ‚Ð¾Ð»!")
         {
             text.text = "";
-        }
-        if (ImageCreating && !ImageCreateComplete)
-        {
-            text.text = "Àõ, äà, ÿ çàáûë å¸ íàðèñîâàòü... À äàâàé òû ñàì å¸ íàðèñóåøü? ";
-            
-        }
-        else
-        {
-            if(text.text == "Àõ, äà, ÿ çàáûë å¸ íàðèñîâàòü... À äàâàé òû ñàì å¸ íàðèñóåøü? ")
-            {
-                text.text = "";
-            }
         }
         if (ImageCreateComplete && !WallDestroyBegin)
         {
             timer = 0;
-            StartCoroutine(WritingSingleText(0, "Ìäà, íà òðîå÷êó åñëè ÷åñòíî... Íó äà ëàäíî.Òåïåðü ïîïðîáóé ñëîìàòü ñòåíó!"));
+            StartCoroutine(WritingSingleText(0, "ÐÑ…, Ð´Ð°, Ñ Ð·Ð°Ð±Ñ‹Ð» ÐµÑ‘ Ð½Ð°Ñ€Ð¸ÑÐ¾Ð²Ð°Ñ‚ÑŒ... Ð Ð´Ð°Ð²Ð°Ð¹ Ñ‚Ñ‹ ÑÐ°Ð¼ ÐµÑ‘ Ð½Ð°Ñ€Ð¸ÑÑƒÐµÑˆÑŒ?"));
+            ozv.NextTrack();
             StartCoroutine(WritingSingleText(5, ""));
-            
+
             WallDestroyBegin = true;
         }
-        if(WallDestroyChek && !WallDestroyflag)
+        if (WallDestroyChek && !WallDestroyflag)
         {
-            StartCoroutine(WritingSingleText(0, "Àãà, òî åñòü è ìåõàíèêè ëîìàíèÿ íåò... Êàêîé äóðàê ýòó èãðó äåëàë?"));
+            StartCoroutine(WritingSingleText(0, "???, ?? ???? ? ???????? ??????? ???... ????? ????? ??? ???? ??????"));
             StartCoroutine(WritingSingleText(4, ""));
-            StartCoroutine(WritingSingleText(5, "Çíàåøü ÷òî? Ïðîñòî óáåðè å¸!"));
+            StartCoroutine(WritingSingleText(5, "?????? ???? ?????? ????? ?!"));
             StartCoroutine(WritingSingleText(9, ""));
             timer = 0;
             WallDestroyflag = true;
         }
         if (WallDestroyChek && !WallDestroyComplete && timer > 30 && timer < 35)
         {
-            text.text = "Íó æå, íå òóïè. Óäàëè ñòåíó!";
+            text.text = "?? ??, ?? ????. ????? ?????!";
         }
-        else if (text.text == "Íó æå, íå òóïè. Óäàëè ñòåíó!")
+        else if (text.text == "?? ??, ?? ????. ????? ?????!")
             text.text = "";
-        if(WallDestroyComplete && !WallDestroyflag && timer > 60 && timer < 65)
+        if (WallDestroyComplete && !WallDestroyflag && timer > 60 && timer < 65)
         {
-            text.text = "Ýòî æå íåíóæíàÿ ñòåíà, ñîòðè åå êàê è âñþ áåñïîëåçíóþ èíôîðìàöèþ";
+            text.text = "??? ?? ???????? ?????, ????? ?? ??? ? ??? ??????????? ??????????";
         }
-        else if(text.text == "Ýòî æå íåíóæíàÿ ñòåíà, ñîòðè åå êàê è âñþ áåñïîëåçíóþ èíôîðìàöèþ")
+        else if (text.text == "??? ?? ???????? ?????, ????? ?? ??? ? ??? ??????????? ??????????")
         {
             text.text = "";
         }
         if (WallDestroyComplete && !WallDestroyflag && timer > 90 && timer < 95)
         {
-            text.text = "Òåáå äåéñòâèòåëüíî òàê ñëîæíî íàæàòü êëàâèøó?";
-        } else if (text.text == "Òåáå äåéñòâèòåëüíî òàê ñëîæíî íàæàòü êëàâèøó?")
+            text.text = "???? ????????????? ??? ?????? ?????? ????????";
+        }
+        else if (text.text == "???? ????????????? ??? ?????? ?????? ????????")
         {
             text.text = "";
         }
+        if (!LockComplete && DverRuchka.enabled)
+            DverRuchka.enabled = false;
+        if (LockComplete && !DverRuchka.enabled)
+            DverRuchka.enabled = true;
 
 
 
@@ -202,7 +214,7 @@ public class ScenaryController : MonoBehaviour
 
 
     }
-    
+
     IEnumerator WritingSingleText(float sleepTime, string currentText)
     {
         yield return new WaitForSeconds(sleepTime);
@@ -213,6 +225,6 @@ public class ScenaryController : MonoBehaviour
         //    text.text = "";
         //}
     }
-    
+
 
 }

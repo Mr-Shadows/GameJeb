@@ -9,6 +9,7 @@ public class DoorTrigger : MonoBehaviour
     public GameObject dragItem;
     public GameObject rotObj;
     public bool open = false;
+    public Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
