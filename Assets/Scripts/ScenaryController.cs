@@ -28,9 +28,10 @@ public class ScenaryController : MonoBehaviour
     public bool WallDestroyChek = false;
     public bool WallDestroyflag = false;
     public bool WallDestroyComplete = false;
-
-    public string pass;
     
+    public string pass;
+
+    public RadioScript1 track;
     public float timer;
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,7 @@ public class ScenaryController : MonoBehaviour
         ScenaryScript = GameObject.Find("Player").GetComponent<RaycastInteraction>();
         string username = Environment.UserName;
         text.text = "Привет,"+ username+ ",добро пожаловать в комнату! Я рассказчик,тут всё просто: прислушивайся ко мне и мы выберемся отсюда в два счёта";
+        track.NextTrack();
         StartCoroutine(WritingSingleText(3, ""));
         StartCoroutine(WritingSingleText(4, "И да, я просто голос в твоей голове. Постарайся не думать об этом."));
         StartCoroutine(WritingSingleText(7, ""));
